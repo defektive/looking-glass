@@ -10,16 +10,6 @@ let hooks = {
         resolve({requestOptions});
       });
     },
-    function (requestDetail) {
-      return new Promise((resolve, reject) => {
-        if (global._dirtyHack.interactiveIntercept) {
-            global._dirtyHack.interceptedRequests[requestDetail.resourceInfoId] = {requestDetail, resolve, reject}
-            // proxyServer.webServerInstance.wsServer.wss.broadcast({interceptedRequests: global._dirtyHack.interceptedRequests.length, resourceInfoId: requestDetail.resourceInfoId})
-        } else {
-          resolve({})
-        }
-      });
-    },
   ],
 
   beforeSendResponse: [
