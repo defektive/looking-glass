@@ -1,0 +1,28 @@
+version: '3'
+services:
+  proxy:
+    image: node
+    working_dir: /usr/local/src/looking-glass
+    volumes:
+      - ./src/looking-glass/app.js:/usr/local/src/looking-glass/app.js
+      - ./src/looking-glass/api:/usr/local/src/looking-glass/api
+      - ./anyproxy/:/usr/local/src/looking-glass/anyproxy
+      - ./volumes/anyproxy-certs/:/root/.anyproxy
+      - node_modules:/usr/local/src/looking-glass/anyproxy/node_modules
+    ports:
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:8001:8001"
+      - "127.0.0.1:8002:8002"
+    command: node app.js
+
+  webpack:
+    image: node
+    working_dir: /usr/local/src/anyproxy
+    volumes:
+      - ./anyproxy/:/usr/local/src/anyproxy
+      - ./volumes/anyproxy-certs/:/root/.anyproxy
+      - node_modules:/usr/local/src/anyproxy/node_modules
+    command: npm run webserver
+
+volumes:
+  node_modules:
